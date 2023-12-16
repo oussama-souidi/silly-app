@@ -1,0 +1,354 @@
+Ourak Erij
+Souidi Oussama
+
+<--------main activity------>
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.google.android.material.button.MaterialButton;
+
+public class MainActivity extends AppCompatActivity {
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+
+        TextView username =(TextView) findViewById(R.id.username);
+        TextView password =(TextView) findViewById(R.id.password);
+
+        MaterialButton loginbtn = (MaterialButton) findViewById(R.id.loginbtn);
+
+        //admin and admin
+
+        loginbtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!username.getText().toString().equals("") && !password.getText().toString().equals("")){
+                    //correct
+                    startActivity(new Intent(MainActivity.this, SecondaryActivity.class));
+                    //Toast.makeText(MainActivity.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                }else
+                    //incorrect
+                    Toast.makeText(MainActivity.this,"LOGIN FAILED !!!",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+    }
+}
+<-----main activity xml------>
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".MainActivity">
+
+    <TextView
+        android:id="@+id/signin"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="50dp"
+        android:layout_marginTop="80dp"
+        android:layout_marginEnd="50dp"
+        android:layout_marginBottom="50dp"
+        android:gravity="center"
+        android:text="Sign in"
+        android:textColor="@color/white"
+        android:textSize="35dp"
+        android:textStyle="bold" />
+
+    <EditText
+        android:id="@+id/username"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/signin"
+        android:layout_marginStart="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:layout_marginBottom="10dp"
+        android:background="#40ffffff"
+        android:drawablePadding="20dp"
+        android:hint="Username"
+        android:padding="20dp"
+        android:textColor="@color/white"
+        android:textColorHint="#c7c7c7"
+        android:maxLength="30"/>
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/password"
+        android:layout_below="@id/username"
+        android:background="#40ffffff"
+        android:hint="Password"
+        android:textColorHint="#c7c7c7"
+        android:textColor="@color/white"
+        android:layout_margin="10dp"
+        android:padding="20dp"
+        android:inputType="textPassword"
+        android:maxLength="30"/>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/loginbtn"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:layout_below="@id/password"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="60dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:backgroundTint="#000080"
+        android:text="LOGIN"
+        android:textColor="#c7c7c7"
+        android:textSize="17sp"/>
+
+    <TextView
+        android:id="@+id/forgotpass"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/loginbtn"
+        android:layout_centerHorizontal="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="20dp"
+        android:layout_marginBottom="20dp"
+        android:text="Forgot password?"
+        android:textColor="#032881"
+        android:textSize="17sp"/>
+
+</RelativeLayout>
+
+
+<--------Secondary activity------>
+
+package com.example.myapplication;// SecondaryActivity.java
+import android.content.Intent;
+import android.os.Bundle;
+import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.google.android.material.button.MaterialButton;
+
+public class SecondaryActivity extends AppCompatActivity {
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_secondary);
+
+        EditText num1 =(EditText) findViewById(R.id.num1);
+        EditText num2 =(EditText) findViewById(R.id.num2);
+        Button sum = (Button) findViewById(R.id.sum);
+
+        EditText url =(EditText) findViewById(R.id.url);
+        Button link = (Button) findViewById(R.id.link);
+
+        sum.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(!num1.getText().toString().equals("") && !num2.getText().toString().equals("")){
+                    //correct
+                    Integer sumnum = Integer.parseInt(num1.getText().toString()) + Integer.parseInt(num2.getText().toString());
+                    Intent intent = new Intent(getApplicationContext(), SumActivity.class);
+                    android.net.Uri data = android.net.Uri.parse(sumnum.toString());
+                    intent.setData(data);
+                    startActivity(intent);
+                    //Toast.makeText(MainActivity.this,"LOGIN SUCCESSFUL",Toast.LENGTH_SHORT).show();
+                }else
+                    //incorrect
+                    Toast.makeText(SecondaryActivity.this,"Error",Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        link.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String url = ((EditText) findViewById(R.id.url)).getText().toString();
+                android.net.Uri uri = android.net.Uri.parse(url);
+                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                startActivity(intent);
+            }
+        });
+    }
+}
+<------Secondary activity xml---->
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/sillycat"
+    tools:context=".SecondaryActivity"
+    tools:visibility="visible">
+
+
+    <EditText
+        android:id="@+id/num1"
+        android:layout_width="297dp"
+        android:layout_height="58dp"
+        android:background="#40ffffff"
+        android:ems="10"
+        android:hint="Number 1"
+        android:padding="20dp"
+        android:inputType="number"
+        android:textColorHint="#e3e3e3"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.497"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.158" />
+
+    <EditText
+        android:id="@+id/num2"
+        android:layout_width="297dp"
+        android:layout_height="58dp"
+        android:background="#40ffffff"
+        android:ems="10"
+        android:hint="Number 2"
+        android:inputType="number"
+        android:padding="20dp"
+        android:textColorHint="#e3e3e3"
+        android:textColor="#ffffff"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.309" />
+
+    <EditText
+        android:id="@+id/url"
+        android:layout_width="273dp"
+        android:layout_height="63dp"
+        android:background="#40ffffff"
+        android:ems="10"
+        android:hint="URL"
+        android:padding="20dp"
+        android:textColorHint="#e3e3e3"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.597" />
+
+    <Button
+        android:id="@+id/sum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sum"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.458"
+        tools:ignore="MissingConstraints" />
+
+    <Button
+        android:id="@+id/link"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go to link"
+
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.71" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<------ Sum Activity------>
+
+package com.example.myapplication;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import android.content.Intent;
+import android.os.Bundle;
+import android.widget.EditText;
+import android.widget.TextView;
+
+public class SumActivity extends AppCompatActivity {
+
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_sum);
+        pl.droidsonroids.gif.GifImageView gifImageView = findViewById(R.id.gifImageView);
+        gifImageView.setImageResource(R.drawable.gojo);
+
+        Intent intent = getIntent();
+        android.net.Uri data = intent.getData();
+        TextView afficher = (TextView) findViewById(R.id.res);
+        afficher.setText("Result: "+data.toString());
+
+    }
+}
+
+<-----SUm Avtivity xml----->
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/bg"
+    tools:context=".SumActivity">
+
+    <TextView
+        android:id="@+id/res"
+        android:layout_width="371dp"
+        android:layout_height="87dp"
+        android:textColor="@color/black"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.4"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.302"
+        android:gravity="center"
+        android:textSize="35dp"
+        android:textStyle="bold"/>
+
+    <pl.droidsonroids.gif.GifImageView
+        android:id="@+id/gifImageView"
+        android:layout_width="409dp"
+        android:layout_height="208dp"
+        android:src="@drawable/gojo"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="1.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.678">
+
+    </pl.droidsonroids.gif.GifImageView>
+</androidx.constraintlayout.widget.ConstraintLayout>
+
+
+<
